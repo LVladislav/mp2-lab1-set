@@ -106,18 +106,49 @@ TBitField& TBitField::operator=(const TBitField &bf) // присваивание
 
 int TBitField::operator==(const TBitField &bf) const // сравнение
 {
-
-  return 0;
+	int temp = 1;
+	if (BitLen != bf.BitLen)
+	{
+		temp = 0;
+	}
+	else
+	{
+		for (int i = 0; i < MemLen; i++)
+		{
+			if (pMem[i] != bf.pMem[i])
+			{
+				temp = 0;
+				break;
+			}
+		}
+	}
+	return temp;
 }
 
 int TBitField::operator!=(const TBitField &bf) const // сравнение
 {
-  return 0;
+	int temp = 0;
+	if (BitLen != bf.BitLen)
+	{
+		temp = 1;
+	}
+	else
+	{
+		for (int i = 0; i < MemLen; i++)
+		{
+			if (pMem[i] != bf.pMem[i])
+			{
+				temp = 1;
+				break;
+			}
+		}
+	}
+	return temp;
 }
 
 TBitField TBitField::operator|(const TBitField &bf) // операция "или"(объединение)
 {
-	/*int n;
+	int n;
 	if (BitLen > bf.BitLen)
 	{
 		n = bf.BitLen;
@@ -130,19 +161,53 @@ TBitField TBitField::operator|(const TBitField &bf) // операция "или"
 	for (int i = 0; i < tmp.MemLen; i++)
 	{
 		tmp.pMem[i] = bf.pMem[i];
-	}*/
-
+	}
+	int m;
+	if (MemLen > tmp.MemLen)
+	{
+		m = tmp.MemLen;
+	}
+	else
+	{
+		m = MemLen;
+	}
+	for (int i = 0; i < m; i++)
+	{
+		tmp.pMem[i] = tmp.pMem[i] | pMem[i];
+	}
+	return tmp;
 }
 
 TBitField TBitField::operator&(const TBitField &bf) // операция "и"
 {
-	/*TBitField t;
-	for (int i = 0; i < MemLen; i++)
+	int n;
+	if (BitLen > bf.BitLen)
 	{
-		t.pMem[i] = pMem[i] & bf.pMem[i];
+		n = bf.BitLen;
 	}
-
-	return t;*/
+	else
+	{
+		n = BitLen;
+	}
+	TBitField tmp(n);
+	for (int i = 0; i < tmp.MemLen; i++)
+	{
+		tmp.pMem[i] = bf.pMem[i];
+	}
+	int m;
+	if (MemLen > bf.MemLen)
+	{
+		m = bf.MemLen;
+	}
+	else
+	{
+		m = MemLen;
+	}
+	for (int i = 0; i < tmp.MemLen; i++)
+	{
+		tmp.pMem[i] = tmp.pMem[i] & pMem[i];
+	}
+	return tmp;
 }
 
 TBitField TBitField::operator~(void) // отрицание
@@ -161,9 +226,35 @@ TBitField TBitField::operator~(void) // отрицание
 
 istream &operator>>(istream &istr, TBitField &bf) // ввод
 {
+                                         // вводить мы должны числа 0 или 1, без пробелов.
+	                                     // Если на вход получили число !=0 или !=1, то прекращается ввод.
+	char a;
+	while (a != ' ')
+	{
+		istr >> a;
+	}
+	while (1)    //бесконечный цикл
+	{
+		istr >> a;
+		if (a == '0')
+		{
+			int i;
+			bf.ClrBit(i++);
+		}
+		if (a == '1')
+		{
+			int i;
+			bf.SetBit(i++);
+		}
+		else
+		{
+			break;
+		}
+	}
+	return istr;
 }
 
 ostream &operator<<(ostream &ostr, const TBitField &bf) // вывод
-{
-
+{ 
+	                        // на выводе должны быть только 0 и 1 последовательность
 }
