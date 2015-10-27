@@ -27,25 +27,35 @@ TSet::operator TBitField()
 
 int TSet::GetMaxPower(void) const // получить макс. к-во эл-тов
 {
+	int temp;
+	temp = MaxPower;
+	return temp;
 }
 
 int TSet::IsMember(const int Elem) const // элемент множества?
 {
-    return 0;
+	int temp;
+	temp = BitField.GetBit(Elem);
+    return temp;
 }
 
 void TSet::InsElem(const int Elem) // включение элемента множества
 {
+	 BitField.SetBit(Elem);
+	
 }
 
 void TSet::DelElem(const int Elem) // исключение элемента множества
 {
+	BitField.ClrBit(Elem);
 }
 
 // теоретико-множественные операции
 
 TSet& TSet::operator=(const TSet &s) // присваивание
 {
+	MaxPower = s.MaxPower;
+
 }
 
 int TSet::operator==(const TSet &s) const // сравнение
