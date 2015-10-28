@@ -28,6 +28,7 @@ TSet::TSet(const TBitField &bf) : BitField(-1)
 
 TSet::operator TBitField() 
 {
+	return 0;
 }
 
 int TSet::GetMaxPower(void) const // получить макс. к-во эл-тов
@@ -110,26 +111,32 @@ TSet TSet::operator+(const TSet &s) // объединение
 
 TSet TSet::operator+(const int Elem) // объединение с элементом
 {
+	return 0;
 }
 
 TSet TSet::operator-(const int Elem) // разность с элементом
 {
+	return 0;
 }
 
 TSet TSet::operator*(const TSet &s) // пересечение
 {
+	return 0;
 }
 
 TSet TSet::operator~(void) // дополнение
 {
+	return 0;
 }
 
 // перегрузка ввода/вывода
 
 istream &operator>>(istream &istr, TSet &s) // ввод
 {
+	return istr;
 }
 
 ostream& operator<<(ostream &ostr, const TSet &s) // вывод
 {
+	return ostr;
 }

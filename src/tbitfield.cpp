@@ -78,7 +78,7 @@ int TBitField::GetBit(const int n) const // получить значение б
 {
 	if ((n > -1) && (n < BitLen)) //проверяем, чтобы не выходило за границы заданного поля.
 	{
-		return pMem[GetMemIndex(n)] & GetMemIndex(n); //получаем значение 0 или 1
+		return pMem[GetMemIndex(n)] & GetMemMask(n); //получаем значение 0 или 1
 	}
   return 0;
 }
@@ -256,5 +256,5 @@ istream &operator>>(istream &istr, TBitField &bf) // ввод
 
 ostream &operator<<(ostream &ostr, const TBitField &bf) // вывод
 { 
-	                        // на выводе должны быть только 0 и 1 последовательность
+	return ostr;
 }
