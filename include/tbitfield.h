@@ -25,6 +25,7 @@ private:
   int   GetMemIndex(const int n) const; // индекс в pМем для бита n                         (#О2)
   TELEM GetMemMask (const int n) const; // битовая маска для бита n                         (#О3)
 public:
+	TBitField();
   TBitField(const int len);          //инициализирующий конструктор (выделение памяти)      (#О1)
   TBitField(const TBitField &bf);    //копирующий конструктор                               (#П1)
   ~TBitField();                      // диструктор                                          (#С)
