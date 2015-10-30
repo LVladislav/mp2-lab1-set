@@ -22,15 +22,15 @@ private:
   int  MemLen; // к-во эл-тов Мем для представления бит.поля
 
   // методы реализации
-  int   GetMemIndex(const int n) const; // индекс в pМем для бита n       (#О2)
-  TELEM GetMemMask (const int n) const; // битовая маска для бита n       (#О3)
+  int   GetMemIndex(const int n) const; // индекс в pМем для бита n                         (#О2)
+  TELEM GetMemMask (const int n) const; // битовая маска для бита n                         (#О3)
 public:
-  TBitField(int len);                //                                   (#О1)
-  TBitField(const TBitField &bf);    //                                   (#П1)
-  ~TBitField();                      //                                    (#С)
+  TBitField(const int len);          //инициализирующий конструктор (выделение памяти)      (#О1)
+  TBitField(const TBitField &bf);    //копирующий конструктор                               (#П1)
+  ~TBitField();                      // диструктор                                          (#С)
 
   // доступ к битам
-  int GetLength(void) const;      // получить длину (к-во битов)           (#О)
+  int GetLength(void) const;      // получить длину (к-во битов)           (#О) const стоит, потому что функцию нельзя изменять. А в скобках, потому что аргумент нельзя изменять
   void SetBit(const int n);       // установить бит                       (#О4)
   void ClrBit(const int n);       // очистить бит                         (#П2)
   int  GetBit(const int n) const; // получить значение бита               (#Л1)
