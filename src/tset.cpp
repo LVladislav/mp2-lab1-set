@@ -24,25 +24,27 @@ TSet::TSet(const TSet &s) //: BitField(s.BitField)
 TSet::TSet(const TBitField &bf) //: BitField(bf)
 {
 	BitField = TBitField(bf);
+	MaxPower = bf.GetLength();
 }
 
-TSet::operator TBitField()
+TSet::operator TBitField() /////////////////////////////////// return BitField
 {
-	return BitField;
+	TBitField tmp(BitField);
+	return tmp;
 }
 
 int TSet::GetMaxPower(void) const // получить макс. к-во эл-тов
 {
-	int temp;
-	temp = MaxPower;
-	return temp;
+	int tmp;
+	tmp = MaxPower;
+	return tmp;
 }
 
 int TSet::IsMember(const int Elem) const // элемент множества?
 {
-	int temp;
-	temp = BitField.GetBit(Elem);
-	return temp;
+	int tmp;
+	tmp = BitField.GetBit(Elem);
+    return tmp;
 }
 
 void TSet::InsElem(const int Elem) // включение элемента множества
@@ -59,8 +61,14 @@ void TSet::DelElem(const int Elem) // исключение элемента мн
 
 TSet& TSet::operator=(const TSet &s) // присваивание
 {
-	MaxPower = s.MaxPower;
-	BitField = s.BitField;
+	if (MaxPower != s.MaxPower)
+	{
+		MaxPower = s.MaxPower;
+	}
+	if (BitField != s.BitField)
+	{
+		BitField = s.BitField;
+	}
 	return *this;
 }
 
@@ -72,46 +80,37 @@ int TSet::operator==(const TSet &s) const // сравнение
 	}
 	else
 	{
-		return BitField == s.BitField;
+		return (BitField == s.BitField);
 	}
+
 }
 
 int TSet::operator!=(const TSet &s) const // сравнение
 {
-	if (BitField != s.BitField)
-	{
-		return BitField != s.BitField;
-	}
-	else
-	{
-		return 0;
-	}
+		return (BitField != s.BitField);
 }
 
 TSet TSet::operator+(const TSet &s) // объединение
 {
-	int len = s.BitField.GetLength();
-	TSet c(len);
-	for (int i = 0; i < len; i++)
-	{
-		if (s.BitField.GetBit(i))
-		{
-			c.InsElem(i);
-		}
-	}
-	for (int i = 0; i < len; i++)
-	{
-		if (BitField.GetBit(i))
-		{
-			c.InsElem(i);
-		}
-	}
-	return c;
+	TSet tmp(BitField | s.BitField);
+	return tmp;
 }
 
 TSet TSet::operator+(const int Elem) // объединение с элементом
 {
-	return 0;
+	if (Elem < MaxPower)
+	{
+	TSet tmp(BitField);
+	tmp.InsElem(Elem);
+	return tmp;
+	}
+	else
+	{
+		TSet tmp(Elem);
+		tmp.BitField = tmp.BitField & BitField;
+		tmp.InsElem(Elem);
+		return tmp;
+	}
 }
 
 TSet TSet::operator-(const int Elem) // разность с элементом
@@ -137,10 +136,31 @@ TSet TSet::operator~(void) // дополнение
 
 istream &operator>>(istream &istr, TSet &s) // ввод
 {
+	int tmp;
+	char a;
+	while (a != '{')
+	{
+		istr >> a;
+	}
+	while ((a != ',') && (a != '}'))
+	{
+		istr >> a;
+		s.InsElem(tmp);
+	}
 	return istr;
 }
 
 ostream& operator<<(ostream &ostr, const TSet &s) // вывод
 {
+	char a;
+	ostr << "{";
+	int tmp = s.GetMaxPower();
+	for (int i = 0; i < tmp; i++)
+	{
+		ostr << a << ' ' << i;
+	}
+	ostr << "}";
 	return ostr;
 }
+
+
